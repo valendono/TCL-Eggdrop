@@ -34,7 +34,7 @@ google: google search
 
 http-title: copy paste link baca headers
 
-idwsn3: guard tcl
+idwsn3: guard channel tcl
 
 jam: melihat jam WIB
 
