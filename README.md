@@ -10,5 +10,7 @@ And the ancient channel #Gembels @ DALNET
 N3: https://www.facebook.com/ForumN3
 RNDC on Facebook https://www.facebook.com/groups/rndc.or.id/
 
+All credits is belong to me and the author that written in every script headers
+
 Enjoy!
 
