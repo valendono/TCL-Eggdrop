@@ -22,6 +22,22 @@ All credits is belong to me and the author that written in every script headers
 Penggunaan:
 Jangan lupa .chanset kepada channel yang mau di enable kan, beberapa TCL harus di enable secara manual
 
+Details:
+alexal: check alexa rank
+calc: hitung-hitung
+dns: dns ip/domain + whois
+google: google search
+http-title: copy paste link baca headers
+idwsn3: guard tcl
+jam: melihat jam WIB
+pagerank: melihat page rank google
+ping: ping yang centil
+portchk: port check
+seen: check keberadaan user
+subtitude: coba sendiri aja
+whois: whois domain .com .net dan .org
+
+
 Disclaimer:
 Semua TCL/Eggdrop Tools yang dipakaikan kepada nol adalah copyleft Internet dan penggunaannya 
 adalah tanggung jawab pengguna bukan owner, tcl owner ataupun server bot ini.
