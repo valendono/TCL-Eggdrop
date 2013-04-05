@@ -2583,7 +2583,7 @@ proc proc:twitter {nick uhand handle chan input} {
 #				set tweetreply [string trim $tweetreply]
 #				set tweetplace [string trim [append tweetplace " $tweetreply"]]
 #			}
-			if {[regexp -nocase -- {<p class="bio ">(.*?)</p>} $html - bio]} { 
+			if {[regexp -nocase -- {<p class="bio profile-field">(.*?)</p>} $html - bio]} { 
                                 regsub -all -nocase -- {<a.*?title="(.*?)"><s>#</s><b>.*?</b></a>} $bio "\\1" bio
                                 regsub -all -nocase -- {<a.*?rel="nofollow">(.*?)</a>} $bio "\\1" bio
                                 regsub -all -nocase -- {<s>@</s><b>(.*?)</b>} $bio "@\\1" bio
@@ -2601,6 +2601,12 @@ proc proc:twitter {nick uhand handle chan input} {
 			set extra ""
 			if {[info exists name] && [info exists nametag]} { append extra "$nametag: [proc:twitter:effect $name]; " }
 			if {[info exists location] && [info exists locationtag]} { append extra "$locationtag: [proc:twitter:effect $location]; " }
+
+                        if {[regexp -nocase -- {data-url="(.*?)" target="_blank">} $html - bios]} {
+                        set bios [string trim $bios]
+                        putserv "$to :$twitter(logo) Avatar: [proc:twitter:descdecode [proc:twitter:descdecode $bios]]"
+                        }
+
 
 			# check if a variable we scraped exists
                       if {[info exists following]} {
