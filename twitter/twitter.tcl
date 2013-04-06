@@ -2587,6 +2587,7 @@ proc proc:twitter {nick uhand handle chan input} {
                                 regsub -all -nocase -- {<a.*?title="(.*?)"><s>#</s><b>.*?</b></a>} $bio "\\1" bio
                                 regsub -all -nocase -- {<a.*?rel="nofollow">(.*?)</a>} $bio "\\1" bio
                                 regsub -all -nocase -- {<s>@</s><b>(.*?)</b>} $bio "@\\1" bio
+                                regsub -all -nocase -- {<a.*?target="_blank" data-expanded-url="" title=".*?" dir="ltr" >(.*?)</a>} $bio "\\1" bio                                
 			set bio [string trim $bio] 
 			}
 			if {[regexp -nocase -- {<p class="js-tweet-text">(.*?)</p>} $html - ltweet]} {
