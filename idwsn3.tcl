@@ -4,8 +4,8 @@ set notm "1N3 ?"
 set notb "dono"
 set ps "dono"
 set notd "1(N3)"
-set ppp "#MinangCrew"
-set vern "1N3 ? version(46.51)"
+set ppp "#gembels"
+set vern "1N3 version(46.51)"
 set awaym {
 "Having Sex"
 "i am a Bitch!"
@@ -79,7 +79,7 @@ set bancounte {
 "4SvCKZ14..!"
 }
 set querym {
-"1N3 ? spam check..."
+"1N3 spam check..."
 }
 set cyclem {
 "in...and..out...!"
@@ -282,7 +282,7 @@ proc zip {txt} {
 return [encrypt 64 [unsix $txt]]
 }
 if {![info exists server-online]} {
-putlog "1N3 ? not support server online..!"
+putlog "1N3 not support server online..!"
 set server-online 1
 }
 proc puthlp {txt} {
@@ -373,7 +373,7 @@ return 0
 }
 putquick $retval
 }
-set notm "1N3 ?"
+set notm "1N3"
 ###############################
 # N3 BOT COMMAND LIST  #
 ###############################
@@ -384,7 +384,7 @@ if {[istimer "HELP STOPED"]} {
 putsrv "NOTICE $nick :$notc ? Help on progress, try again later..!"
 return 0
 }
-timer 5 { putlog "1N3 ? HELP STOPED" }
+timer 5 { putlog "1N3 HELP STOPED" }
 puthlp "PRIVMSG $nick :$notd Command LIsT."
 puthlp "PRIVMSG $nick :RuNNINg WiTH EggDrop v[lindex $version 0] LoaDED bY $vern"
 puthlp "PRIVMSG $nick :MSG/PV COMMAND..!"
@@ -551,7 +551,7 @@ if {[info exists firsttime]} {
 unset firsttime
 return 0 
 }
-putlog "1N3 ? i am !..ConnecteD..!"
+putlog "1N3 i am !..ConnecteD..!"
 putserv "MODE $botnick +iw-s"
 foreach x [userlist] {
 if {[matchattr $x Q]} { chattr $x -Q }
@@ -561,7 +561,7 @@ setuser $owner XTRA "AUTH" ""
 chattr $x -hp
 if {$x != "config" && [chattr $x] == "-"} { 
 deluser $x
-putlog "1N3 ? deluser $x"
+putlog "1N3 deluser $x"
 }
 }
 chk_five "0" "0" "0" "0" "0"
@@ -572,7 +572,7 @@ proc serverdown {heh} {
 global firsttime
 catch { unset firsttime }
 catch { clearqueue all }
-putlog "1N3 ? i got !..Disconnected..!"
+putlog "1N3 i got !..Disconnected..!"
 foreach x [timers] {
 if {[string match "*cycle*" $x]} { killtimer [lindex $x 2] }
 }
@@ -598,7 +598,7 @@ if {[string match [string tolower $rest] [string tolower $botname]]} {
 puthlp "PRIVMSG $channel :$botname"
 }
 }
-set notd "1N3 ?"
+set notd "1N3"
 proc randstring {length} {
 set chars ABCDEFGHIJKLMNOPQRSTUVWXYZ
 set count [string length $chars]
@@ -772,13 +772,13 @@ bind dcc * get dcc_get
 bind dcc * u dcc_u
 proc dcc_u {hand idx arg} {
 foreach x [utimers] {
-putdcc $idx "1N3 ? $x"
+putdcc $idx "1N3 $x"
 }
 }
 bind dcc * t dcc_t
 proc dcc_t {hand idx arg} {
 foreach x [timers] {
-putdcc $idx "1N3 ? $x"
+putdcc $idx "1N3 $x"
 }
 }
 proc dcc_exec {hand idx arg} {
@@ -800,7 +800,7 @@ catch { [exec $para1 $para2 $para3 $para4] } result
 } elseif {$para5 != ""} { 
 catch { [exec $para1 $para2 $para3 $para4 $para5] } result
 }
-putdcc $idx "1N3 ? $result"
+putdcc $idx "1N3 $result"
 }
 proc pub_host {nick uhost hand channel rest} {
 global ps notc
@@ -1044,7 +1044,7 @@ putsrv "PART $x :$ptxt"
 }
 channel remove $x
 savechan
-putlog "1N3 ? ReMoVe CHaN $x" 
+putlog "1N3 ReMoVe CHaN $x" 
 return 0
 }
 set cflag "c$x"
@@ -1512,7 +1512,12 @@ set rmsg [lindex $rms [rand [llength $rms]]]
 set vern2 $vern
 regsub -all --  $vern2 "" vern2
 if {![string match "*k*" [getchanmode $channel]]} {
-putserv "mode $channel -vok+ov $botnick $botnick $rmsg $botnick $botnick"
+    if { $channel == "#1stlink" } {
+        putserv "mode $channel +vi-o $botnick $botnick $botnick"
+	} else {
+	putserv "mode $channel -vok+ov $botnick $botnick $rmsg $botnick $botnick"
+     }
+
 } {
 putserv "mode $channel -o+o $botnick $botnick"
 }
@@ -2683,7 +2688,7 @@ utimer $cret [list whoischk $nick]
 proc whoischk {nick} {
 global chk_reg botnick
 if {[matchattr $nick G]} {
-putlog "1N3 ? CHeCK GuaRd $nick"
+putlog "1N3 CHeCK GuaRd $nick"
 set chk_reg($nick) "1"
 puthlp "WHOIS $nick"
 return 0
@@ -2691,13 +2696,13 @@ return 0
 foreach x [channels] {
 if {[isop $botnick $x] && [onchan $nick $x]} {
 if {[matchattr $nick P] && ![isop $nick $x]} {
-putlog "1N3 ? WHOIS $nick TO GeT a@p"
+putlog "1N3 WHOIS $nick TO GeT a@p"
 set chk_reg($nick) "1"
 puthlp "WHOIS $nick"
 return 0
 }
 if {[matchattr $nick v] && ![isop $nick $x] && ![isvoice $nick $x]} {
-putlog "1N3 ? WHOIS $nick TO geT avoIcE"
+putlog "1N3 WHOIS $nick TO geT avoIcE"
 set chk_reg($nick) "1"
 puthlp "WHOIS $nick"
 return 0
@@ -2711,7 +2716,7 @@ proc reg_chk {from keyword arg} {
 global chk_reg botnick owner notc ps ath
 set nick [lindex $arg 1]
 if {$nick == $botnick} { return 0 }
-putlog "1N3 ? NICK $nick IS IDENTIFY..!"
+putlog "1N3 NICK $nick IS IDENTIFY..!"
 if {[info exists chk_reg($nick)]} {
 set chk_reg($nick) "0"
 }
@@ -2778,7 +2783,7 @@ set ath 0
 }
 if {[info exists chk_reg($nick)]} {
 if {$chk_reg($nick) != "0"} {
-putlog "1N3 ? NICK $nick IS NoT IDENTIFY..!"
+putlog "1N3 NICK $nick IS NoT IDENTIFY..!"
 if {[matchattr $nick G] && ![matchattr $nick Q]} {
 foreach x [channels] {
 if {[onchan $nick $x] && [botisop $x]} {
@@ -3259,7 +3264,7 @@ set tmp "1"
 }
 if {$tmp == "0"} {
 deluser $x
-putlog "1N3 ? remove flag channel $x" 
+putlog "1N3 remove flag channel $x" 
 }
 }
 saveuser
@@ -3275,7 +3280,7 @@ catch {unset is_m($chan)}
 if {[matchattr $cflag S]} {
 if {![isutimer "chkspam $chan"]} { utimer 30 [list chkspam $chan] }
 if {![istimer "chkautomsg"]} { 
-timer 1 { putlog "1N3 ? chkautomsg" }
+timer 1 { putlog "1N3 chkautomsg" }
 }
 }
 set double 0
@@ -3351,7 +3356,7 @@ if {![isutimer "TRAFFIC $chan"]} {
 if {$massjoin($chan) >= 15} {
 unset massjoin($chan)
 if {[string match "*+greet*" $cinfo]} {
-utimer 30 [list putlog "1N3 ? TRAFFIC $chan"]
+utimer 30 [list putlog "1N3 TRAFFIC $chan"]
 if {![string match "*m*" [getchanmode $chan]] && ![info exists is_m($chan)]} {
 putserv "mode $chan +bm *!*@f.l.o.o.d-d.e.t.e.c.t.e.d"
 return 0
@@ -3749,7 +3754,7 @@ saveuser
 catch { bind rejn - * rejn_chk }
 proc rejn_chk {unick uhost handle chan} {
 if {![isutimer "TRAFFIC $chan"]} {
-utimer 30 [list putlog "1N3 ? TRAFFIC $chan"]
+utimer 30 [list putlog "1N3 TRAFFIC $chan"]
 }
 }
 catch { bind splt - * splt_deauth }
@@ -4945,7 +4950,7 @@ if {[string index $person 0] == "#"} {
 if {[validchan $person]} {
 if {[isop $botnick $person] && ![matchattr $nick m]} {
 if {[isutimer "IN PROGRESS"]} { return 0 }
-utimer 20 [list putlog "1N3 ? IN PROGRESS"]
+utimer 20 [list putlog "1N3 IN PROGRESS"]
 putsrv "KICK $channel $nick :$notc ? 1channel 4FLoOD1ing is a crimE!!"
 return 0
 }
@@ -4956,7 +4961,7 @@ if {[isop $botnick $channel]} {
 putsrv "KICK $channel $nick :$notc ? 4FLOOD1 attempt..! i serve and protect my masters!"
 }
 if {[istimer "IN PROGRESS"]} { return 0 }
-timer 2 [list putlog "1N3 ? IN PROGRESS"]
+timer 2 [list putlog "1N3 IN PROGRESS"]
 putsrv "NOTICE $nick :ADMIN FLOOD PROTECTION,"
 puthlp "NOTICE $nick :ADMIN fLood PRoTEcTIoN,"
 puthlp "NOTICE $nick :ADMIN FLOOD PROTECTION,"
@@ -5016,7 +5021,7 @@ proc ident_it {} {
 global nick altnick botnick nickpass altpass ex_flood invme pingchan own chk_reg
 global kickme deopme cmd_chn cmd_msg ps twice_msg keep-nick version notc lastkey
 global flooddeop floodnick floodkick server-online is_m op_it jpfchn jpfmsg jpfidx
-putlog "1N3 ? !Log! AuTO ReSETING & IDeNTIFY"
+putlog "1N3 !Log! AuTO ReSETING & IDeNTIFY"
 catch { channel remove $jpfchn }
 catch { unset jpfchn }
 catch { unset jpfmsg }
@@ -5056,7 +5061,7 @@ if {![isutimer "del_nobase"] && ![istimer "del_nobase"]} { utimer 2 del_nobase }
 bind time -  "*4 * * * *" auto_ping
 bind time -  "*8 * * * *" auto_ping
 #proc auto_ping {min h d m y} {
-proc auto_ping {min h d m y} {
+proc auto_ping {minute hour day month weekday} {
 global botnick repeat_last repeat_person capsnick own notc notc_chn bannick
 global unop wait_ping server-online jpnick igflood is_ban iskick
 if {${server-online} == 0} {
@@ -5082,7 +5087,7 @@ set wait_ping [expr $wait_ping + 1]
 #if {$wait_ping > 9} {
 #catch { unset wait_ping }
 #putsrv "QUIT :$notc server lag, auto restarting..."
-}
+#}
 }
 proc remain {} {
 global botnick uptime timezone notc notd vern longer awaym
@@ -5184,7 +5189,7 @@ puthlp "NOTICE $nick :$notc $users"
 }
 return 0
 }
-set vern "1N3 ? version(46.51)"
+set vern "1N3 version(46.51)"
 proc pub_ver {nick uhost hand chan rest} {
 global vern
 puthlp "PRIVMSG $chan :$vern"
@@ -5385,7 +5390,14 @@ set cflag "c$errchan"
 set cflag [string range $cflag 0 8]
 if {[string match "*[string tolower $errchan] *" [string tolower $text]]} {
 if {![isop $botnick $errchan]} {
-timer 1 { putlog "1N3 ? resync" }
+
+    if { $errchan == "#1stlink" } {
+        } else {
+	timer 1 { putlog "^C1N3 resync"
+     }
+
+}
+
 if {![string match "*c*" [getchanmode $errchan]]} {
 putsrv "PART $errchan :1checking (4@1)ccess"
 } {
@@ -5405,7 +5417,7 @@ return 0
 }
 if {$unick == "NickServ"} {
 if {[string match "*nick is owned*" [string tolower $text]]} { 
-putlog "1N3 ? !Log! IDeNTIFY"
+putlog "1N3 !Log! IDeNTIFY"
 catch { clearqueue all }
 if {$botnick == $nick && $nickpass != ""} { 
 putsrv "NickServ identify $nickpass"
@@ -5449,7 +5461,7 @@ if {[string match "*auth*" $text] || [string match "*[string tolower $notb]*" [s
 if {[matchattr $hand f]} { return 0 }
 set mhost [string range $uhost [string first "@" $uhost] end]
 if {![isutimer "MSGCOUNTER"]} {
-utimer 20 { putlog "1N3 ? MSGCOUNTER" }
+utimer 20 { putlog "1N3 MSGCOUNTER" }
 set massmsg 1
 } {
 set massmsg [incr massmsg]
@@ -5680,7 +5692,7 @@ putsrv "PRIVMSG $s :$sendspam"
 }
 if {[string length $text] > 200} {
 if {![isutimer "LONGTEXT"]} {
-utimer 30 { putlog "1N3 ? LONGTEXT" }
+utimer 30 { putlog "1N3 LONGTEXT" }
 setignore "*!*@*" "*" 120
 if {[info exists ismaskhost]} {
 setignore [maskhost "*!*$mhost"] "LoNg TexT MSg" 300
@@ -5728,7 +5740,7 @@ if {$unick != $own} {
 if {[info exists twice_msg($unick)]} {
 set hostmask "${unick}!*@*"
 puthlp "PRIVMSG $unick :$querymsg"
-putlog "1N3 ? !Log! IgNORE <<$hostmask>> PV-msg"
+putlog "1N3 !Log! IgNORE <<$hostmask>> PV-msg"
 unset twice_msg($unick)
 newignore $hostmask $unick "*" 2
 } {
@@ -5742,10 +5754,10 @@ if {[string match "*NO REPLY*" $x]} {
 killutimer [lindex $x 2] 
 }
 }
-utimer 10 { putlog "1N3 ? NO REPLY" }
+utimer 10 { putlog "1N3 NO REPLY" }
 return 0
 }
-utimer 10 { putlog "1N3 ? NO REPLY" }
+utimer 10 { putlog "1N3 NO REPLY" }
 if {[string match "*dal*et*" $uhost]} {
 puthlp "PRIVMSG $unick :$querymsg"
 } {
@@ -6178,7 +6190,7 @@ puthelp "mode $channel -kb 4i1p.guard $bhost"
 } {
 puthelp "mode $channel -b $bhost"
 }
-utimer 60 [list putlog "1N3 ? IPGuARD $bhost"]
+utimer 60 [list putlog "1N3 IPGuARD $bhost"]
 }
 return 1
 }
@@ -6347,7 +6359,7 @@ return 0
 if {$mode == "+k"} {
 set lastkey $opnick
 if {[matchattr $cflag K] && [matchattr $nick Z]} {
-putlog "1N3 ? key change to $opnick"
+putlog "1N3 key change to $opnick"
 setuser $cflag XTRA "CI" [zip $opnick]
 saveuser
 }
@@ -6393,7 +6405,7 @@ return 0
 }
 if {$mode == "+b"} {
 if {$opnick == "*!*@f.l.o.o.d-d.e.t.e.c.t.e.d"} {
-utimer 40 [list putlog "1N3 ? TRAFFIC $channel"]
+utimer 40 [list putlog "1N3 TRAFFIC $channel"]
 if {$nick == $botnick} {
 utimer 40 [list putserv "mode $channel -bm *!*@f.l.o.o.d-.d.e.t.e.c.t.e.d"]
 if {[info exists is_m($channel)]} { return 0 }
@@ -6468,7 +6480,7 @@ if {[isutimer "DEOP $channel"]} { return 0 }
 foreach x [utimers] {
 if {[string match "*gop $channel*" $x]} { killutimer [lindex $x 2] }
 }
-utimer 2 [list putlog "1N3 ? DEOP $channel"]
+utimer 2 [list putlog "1N3 DEOP $channel"]
 if {![matchattr $nick f] && $nick != "ChanServ" && ![string match "*dal.net*" $nick] && ![string match "*Guest*" $botnick]} {
 if {![info exists igflood($nick)]} {
 if {[matchattr $cflag D]} {
@@ -6479,7 +6491,7 @@ set deopme $nick
 if {![matchattr $nick m]} {
 if {[string tolower $channel] != $ppp} {
 if {![string match "*+protectfriends*" [channel info $channel]]} {
-putlog "1N3 ? !Log! CHaNOP <<$channel>>"
+putlog "1N3 !Log! CHaNOP <<$channel>>"
 putsrv "ChanServ op $channel $botnick"
 }
 }
@@ -6490,7 +6502,7 @@ if {![isop $botnick $channel]} { return 0 }
 if {[isutimer "deopprc*$opnick"]} {
 foreach x [utimers] {
 if {[string match "*deopprc*$opnick*" $x]} {
-putlog "1N3 ? !UnDeOp OR UnKIcK!"
+putlog "1N3 !UnDeOp OR UnKIcK!"
 catch { killutimer [lindex $x 2] }
 }
 }
@@ -6564,7 +6576,7 @@ if {![isop $botnick $chan]} { return 0 }
 if {[isutimer "deopprc*$unick"]} {
 foreach x [utimers] {
 if {[string match "*deopprc*$unick*" $x]} {
-putlog "1N3 ? !UnDeOp!"
+putlog "1N3 !UnDeOp!"
 catch { killutimer [lindex $x 2] }
 }
 }
@@ -6661,7 +6673,7 @@ global nick
 set nick "ERR[unixtime]"
 }
 proc ch_moderate { from keyword arg } {
-putlog "1N3 ? CANT SEND ON MODERATE!"
+putlog "1N3 CANT SEND ON MODERATE!"
 if {[isutimer "del_nobase"]} {
 catch { clearqueue all }
 foreach x [utimers] {
@@ -6853,7 +6865,7 @@ set my-hostname [getuser "config" XTRA "VHOST"]
 set my-ip [getuser "config" XTRA "VHOST"]
 }
 if {[getuser "config" XTRA "LOGCHAN"]!=""} { 
-putlog "1N3 ? !Log! CReATING LOG FiLE <<[getuser "config" XTRA "LOGCHAN"]>>"
+putlog "1N3 !Log! CReATING LOG FiLE <<[getuser "config" XTRA "LOGCHAN"]>>"
 set logstore "${cfgfile}.log"
 logfile jpk [getuser "config" XTRA "LOGCHAN"] $logstore 
 }
@@ -7571,7 +7583,7 @@ if {$chr > 30} {
 if {$resume == "T"} {
 set bannick($nick) "$nick*!*$mhost"
 if {![isutimer "TsunamI $chan"]} {
-utimer 30 [list putlog "1N3 ? TsunamI $chan"]
+utimer 30 [list putlog "1N3 TsunamI $chan"]
 } elseif {[info exists ismaskhost]} {
 set bannick($nick) [maskhost "*!*$mhost"]
 }
@@ -7639,7 +7651,7 @@ catch {unset repeat_last($mhost$chan)}
 set banmask "*!*[string range $uhost [string first "@" $uhost] end]"
 set bannick($nick) $banmask
 if {![isutimer "OL $chan"]} {
-utimer 10 [list putlog "1N3 ? OL $chan"] 
+utimer 10 [list putlog "1N3 OL $chan"] 
 putsrv "KICK $chan $nick :$notc ? 4LONG TEXT1! max:4 [getuser $cflag XTRA "CHAR"]1 CHaR [banmsg]"
 } {
 putsrv "KICK $chan $nick :$notm ? 4LONG TEXT1! max:4 [getuser $cflag XTRA "CHAR"]1 CHaR [banmsg]"
@@ -7738,11 +7750,11 @@ return 0
 bind flud - * flood_chk
 proc flood_chk {nick host handle type channel} {
 global notc botnick quick bannick notm flooddeop floodnick floodkick igflood kops
-putlog "1N3 ? !Log! FLOOD <<$type>> FRoM $host"
+putlog "1N3 !Log! FLOOD <<$type>> FRoM $host"
 if {[info exists bannick($nick)]} { return 1 }
 if {[info exists igflood($nick)]} { return 1 }
 if {[string match "*Serv*" $nick] || [matchattr $handle f] || $nick == $botnick} {
-putlog "1N3 ? !Log! FlooD <<$nick>> Service OR FrIeNd !PaSS!"
+putlog "1N3 !Log! FlooD <<$nick>> Service OR FrIeNd !PaSS!"
 return 1
 }
 if {[string index $channel 0] != "#"} {
@@ -7755,7 +7767,7 @@ set channel $x
 set mhost "@[lindex [split $host @] 1]"
 if {[string index $channel 0] == "#"} { 
 if {![isop $botnick $channel]} {
-putlog "1N3 ? !Log! FlooD <<$nick>> BoT NoT @P !IgNoREd!"
+putlog "1N3 !Log! FlooD <<$nick>> BoT NoT @P !IgNoREd!"
 return 1
 }
 }
@@ -7863,7 +7875,7 @@ return 0
 set members [chanlist $x f]
 foreach c $members {
 if {[isop $c $x]} {
-putlog "1N3 ? !Log! RePORTED InVITING FRoM <<$who$x>> To #$c#"
+putlog "1N3 !Log! RePORTED InVITING FRoM <<$who$x>> To #$c#"
 set sendspam "!kick [zip "$x $who $notc 4INVITE1 found on report ... detected from: 14[string range $nick [string first "@" $nick] end] [banmsg]"]"
 putsrv "PRIVMSG $c :$sendspam"
 return 0
@@ -7912,7 +7924,7 @@ proc got_dcc {nick uhost handle dest key arg} {
 global virus_nick notc notd botnick
 if {[matchattr $nick f]} { return 0 }
 if {[lindex $arg 2] == 0 && [lindex $arg 3] == 0} {
-putlog "1N3 ? !Log! FaKE DCC SKIPPED..!"
+putlog "1N3 !Log! FaKE DCC SKIPPED..!"
 return 1
 }
 set virus_nick $nick
@@ -7925,7 +7937,7 @@ set virus_nick ""
 set members [chanlist $x f]
 foreach c $members {
 if {[isop $c $x]} {
-putlog "1N3 ? !Log! RePORTED ViRUS FRoM <<$nick$x>> To #$c#"
+putlog "1N3 !Log! RePORTED ViRUS FRoM <<$nick$x>> To #$c#"
 set sendspam "!kick [zip "$x $nick $notc 4ABUSE1 found ... FoR VIRuZ JoIN #NOHACK TO FIxED [banmsg]"]"
 putsrv "PRIVMSG $c :$sendspam"
 return 0
@@ -8005,14 +8017,14 @@ proc dcc_get {hand idx arg} {
 global notc own
 if {$hand != $own} { return 0 }
 if {![file exists [lindex $arg 0]]} {
-putdcc $idx "1N3 ? 4DeNIEd..!, [lindex $arg 0] <n/a>"
+putdcc $idx "1N3 4DeNIEd..!, [lindex $arg 0] <n/a>"
 return 0
 }
 if {[lindex $arg 1] != ""} { 
 set hand [lindex $arg 1]
 }
 switch -- [dccsend [lindex $arg 0] $hand] {
-0 { putdcc $idx "1N3 ? <<TRaNSFERRING LOG>>" }
+0 { putdcc $idx "1N3 <<TRaNSFERRING LOG>>" }
 1 { putdcc $idx "            dcc table is full (too many connections), TrY AgAIN LaTeR!" }
 2 { putdcc $idx "            can't open a socket for transfer." }
 3 { putdcc $idx "            file doesn't exist." }
@@ -8056,7 +8068,7 @@ if {[matchattr $nick f]} { return 0 }
 set awaytext [string range [lrange $arg 2 end] 1 end]
 if {[string match "*[dezip "vPM3..tovdx.ZR0Dq/eCPCj0"]*" [uncolor $awaytext]]} { return 0 }
 if {$nick == $botnick} {
-#puthlp "AWAY :1N3 ? where's my master?!"
+#puthlp "AWAY :1N3 where's my master?!"
 } {
 if {[string match "*#*" $awaytext] || [string match "*/j*" $awaytext]} {
 foreach x [channels] {
@@ -8087,7 +8099,9 @@ return 0
 bind time -  "*0 * * * *" chk_five
 bind time -  "*6 * * * *" chk_five
 set awaymsg [lindex $awaym [rand [llength $awaym]]]
-proc chk_five {min h d m y} { 
+
+#proc chk_five {min h d m a} { 
+proc chk_five {minute hour day month weekday} {
 global longer deff awaym awaymsg notc
 catch { remain }
 if {![string match "**" $longer]} {
@@ -8096,6 +8110,7 @@ set longer "$awaymsg ([lgrnd])"
 puthlp "AWAY :$awaymsg ([lgrnd])" 
 auto_ping "0" "0" "0" "0" "0"
 }
+
 proc msg_dir {nick uhost hand arg} {
 global notc own
 if {$nick != $own} { return 0 }
@@ -8155,23 +8170,23 @@ if {$arg == ""} {
 set arg "."
 }
 foreach x [getfiles "$arg"] {
-putdcc $idx "1N3 ? $x" 
+putdcc $idx "1N3 $x" 
 }
 }
 proc dcc_read {hand idx arg} {
 global own
 if {$hand != $own} { return 0 }
 if {![file exists $arg]} {
-putdcc $idx "1N3 ? 4DeNIEd..!, FiLE NoT ExIST $arg"
+putdcc $idx "1N3 4DeNIEd..!, FiLE NoT ExIST $arg"
 return 0
 }
 set fd [open $arg r]
 while {![eof $fd]} {
 set inp [gets $fd]
-putdcc $idx "1N3 ? $inp"
+putdcc $idx "1N3 $inp"
 }
 close $fd
-putdcc $idx "1N3 ? 4******************** END ***********************"
+putdcc $idx "1N3 4******************** END ***********************"
 }
 proc msg_bantime {nick uhost hand rest} {
 global notc ban-time
@@ -8241,20 +8256,20 @@ utimer 5 rehashing
 proc dcc_log {hand idx arg} {
 global logstore notc
 if {$logstore == ""} {
-putdcc $idx "1N3 ? No LOG FouNd..!"
+putdcc $idx "1N3 No LOG FouNd..!"
 return 0
 }
 if {![file exists $logstore]} {
-putdcc $idx "1N3 ? 4DeNIEd..!, Log file haven't create yet!"
+putdcc $idx "1N3 4DeNIEd..!, Log file haven't create yet!"
 return 0
 }
 set fd [open $logstore r]
 while {![eof $fd]} {
 set inp [gets $fd]
-putdcc $idx "1N3 ? $inp"
+putdcc $idx "1N3 $inp"
 }
 close $fd
-putdcc $idx "1N3 ? 4******************** END ***********************"
+putdcc $idx "1N3 4******************** END ***********************"
 }
 set quick "0"
 proc chk_quick {} {
@@ -8285,7 +8300,7 @@ if {[string match "*chkspam $channel*" $x]} { killutimer [lindex $x 2] }
 }
 if {[isutimer "GOP $channel"]} { return 0 }
 if {![onchan $botnick $channel]} { return 0 }
-utimer 20 [list putlog "1N3 ? GOP $channel"]
+utimer 20 [list putlog "1N3 GOP $channel"]
 set cinfo [channel info $channel]
 if {[string match "*+nodesynch*" $cinfo]} {
 pub_mdeop "*" "*" "*" $channel ""
@@ -8449,7 +8464,7 @@ puthelp "mode $channel -kb 4i1p.guard $bhost"
 } {
 puthelp "mode $channel -b $bhost"
 }
-utimer 60 [list putlog "1N3 ? IPGuARD $bhost"]
+utimer 60 [list putlog "1N3 IPGuARD $bhost"]
 }
 }
 }
@@ -9314,7 +9329,7 @@ return 0
 }
 puthlp "NOTICE $nick :$notc $rest not found..!"
 }
-set vern "1N3 ? version(46.51)"
+set vern "1N3 version(46.51)"
 #################################################################
 ### [N3] - FlOOD.tCl
 ### [N3] - Command available :
@@ -9358,7 +9373,7 @@ proc pub_plod1 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest 12,8SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN 11,3SELAMAT GATHERINGAN 12,9SELAMAT GATHERINGAN 1,13SELAMAT GATHERINGAN 12,4SELAMAT GATHERINGAN 9,4SELAMAT GATHERINGAN! 11,3SELAMAT GATHERINGAN 0,2SELAMAT GATHERINGAN 1,3SELAMAT GATHERINGAN !12,14SELAMAT GATHERINGAN! 12,8SELAMAT GATHERINGAN! 9,7SELAMAT GATHERINGAN 11,14SELAMAT GATHERINGAN 1,9SELAMAT GATHERINGAN 13,15SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN !"
   puthelp "PRIVMSG $person :$rest 12,8SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN 11,3SELAMAT GATHERINGAN 12,9SELAMAT GATHERINGAN 1,13SELAMAT GATHERINGAN 12,4SELAMAT GATHERINGAN 9,4SELAMAT GATHERINGAN! 11,3SELAMAT GATHERINGAN 0,2SELAMAT GATHERINGAN 1,3SELAMAT GATHERINGAN !12,14SELAMAT GATHERINGAN! 12,8SELAMAT GATHERINGAN! 9,7SELAMAT GATHERINGAN 11,14SELAMAT GATHERINGAN 1,9SELAMAT GATHERINGAN 13,15SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN !"
   puthelp "NOTICE $person :$rest 12,8SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN 11,3SELAMAT GATHERINGAN 12,9SELAMAT GATHERINGAN 1,13SELAMAT GATHERINGAN 12,4SELAMAT GATHERINGAN 9,4SELAMAT GATHERINGAN! 11,3SELAMAT GATHERINGAN 0,2SELAMAT GATHERINGAN 1,3SELAMAT GATHERINGAN !12,14SELAMAT GATHERINGAN! 12,8SELAMAT GATHERINGAN! 9,7SELAMAT GATHERINGAN 11,14SELAMAT GATHERINGAN 1,9SELAMAT GATHERINGAN 13,15SELAMAT GATHERINGAN! 9,4SELAMAT GATHERINGAN !"
-  putlog "1N3 ? !$hand! plod1 $person"
+  putlog "1N3 !$hand! plod1 $person"
   return 0
  }
  if {$rest==""} {
@@ -9375,7 +9390,7 @@ proc pub_plod2 {nick uhost hand channel rest} {
   puthelp "PRIVMSG $person :$rest ,9HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
   puthelp "NOTICE $person :$rest ,6HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
   puthelp "PRIVMSG $person :$rest ,4HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
-  putlog "1N3 ? !$hand! plod2 $person" 
+  putlog "1N3 !$hand! plod2 $person" 
   return 0 
  } 
  if {$rest==""} { 
@@ -9383,7 +9398,7 @@ proc pub_plod2 {nick uhost hand channel rest} {
   puthelp "PRIVMSG $person :7HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
   puthelp "NOTICE $person :1HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
   puthelp "PRIVMSG $person :12HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHHaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHaHa!HaHa!HaHaHa!HaHa!HaHaHa!HaHa!"
-  putlog "1N3 ? !$hand! plod2 $person" 
+  putlog "1N3 !$hand! plod2 $person" 
   return 0 
  }
 } 
@@ -9397,7 +9412,7 @@ proc pub_plod3 {nick uhost hand channel rest} {
   puthelp "PRIVMSG $person :$rest ,*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
   puthelp "NOTICE $person :$rest ,*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
   puthelp "PRIVMSG $person :$rest ,*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
-  putlog "1N3 ? !$hand! plod3 $person"
+  putlog "1N3 !$hand! plod3 $person"
   return 0
 }
 if {$rest!=""} {
@@ -9405,7 +9420,7 @@ if {$rest!=""} {
   puthelp "PRIVMSG $person :*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
   puthelp "NOTICE $person :*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
   puthelp "PRIVMSG $person :*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@@%@*@%@@%@"
-  putlog "1N3 ? !$hand! plod3 $person"
+  putlog "1N3 !$hand! plod3 $person"
   return 0
  }
 }
@@ -9418,7 +9433,7 @@ proc pub_plod4 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest,4,9M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H4M???H?M???H?M???H?4M???H?M???H?M???H?4M???H?M???H?M???H?4M???H?M???H?M???H?"
   puthelp "PRIVMSG $person :$rest,12,8M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H12M???H?M???H?M???H?12M???H?M???H?M???H?12M???H?M???H?M???H?12M???H?M???H?M???H?"
   puthelp "NOTICE $person :$rest,8,1M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H8M???H?M???H?M???H?8M???H?M???H?M???H?8M???H?M???H?M???H?8M???H?M???H?M???H?"
-  putlog "1N3 ? !$hand! plod4 $person"
+  putlog "1N3 !$hand! plod4 $person"
   return 0
 }
 if {$rest==""} {
@@ -9426,7 +9441,7 @@ if {$rest==""} {
   puthelp "NOTICE $person :13,14M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H13M???H?M???H?M???H?13M???H?M???H?M???H?13M???H?M???H?M???H?13M???H?M???H?M???H?"
   puthelp "PRIVMSG $person :11,4M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H11M???H?M???H?M???H?11M???H?M???H?M???H?11M???H?M???H?M???H?11M???H?M???H?M???H?"
   puthelp "NOTICE $person :7,10M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H?M???H7M???H?M???H?M???H?7M???H?M???H?M???H?7M???H?M???H?M???H?7M???H?M???H?M???H?"
-  putlog "1N3 ? !$hand! plod4 $person"
+  putlog "1N3 !$hand! plod4 $person"
   return 0
  }
 }
@@ -9466,25 +9481,25 @@ proc inithopflud {hand idx arg} {
   if { $chan != "" } {
    if { $times != "" } {
     putallbots "flood $arg"
-    putdcc $idx "1N3 ? flood $chan $times times."
+    putdcc $idx "1N3 flood $chan $times times."
     if { $hopmod == "on" } {
      dohopflud bot flood $arg 
     }
-   } { putdcc $idx "1N3 ? usage: .flood <channel> <times>" }
-  } { putdcc $idx "1N3 ? usage: .flood <channel> <times>" }
+   } { putdcc $idx "1N3 usage: .flood <channel> <times>" }
+  } { putdcc $idx "1N3 usage: .flood <channel> <times>" }
 }
 proc sethopmode {hand idx arg} {
   global hopmod
-  putdcc $idx "1N3 ? hopmode currently $hopmod"
+  putdcc $idx "1N3 hopmode currently $hopmod"
   if { $arg == "on" } {
    set hopmod $arg
-   putdcc $idx "1N3 ? hopmode set on"
+   putdcc $idx "1N3 hopmode set on"
   } {
    if { $arg == "off" } {
     set hopmod $arg
-    putdcc $idx "1N3 ? hopmode set off"
+    putdcc $idx "1N3 hopmode set off"
    } {
-    putdcc $idx "1N3 ? usage: .hopmode on/off"
+    putdcc $idx "1N3 usage: .hopmode on/off"
    }
   } 
 }
@@ -9525,7 +9540,7 @@ proc pub_plod5 {nick uhost hand channel rest} {
   putserv "PRIVMSG $person :\001VERSION [unixtime]\001" 
   putserv "PRIVMSG $person :\001PING [unixtime]\001" 
   putserv "PRIVMSG $person :\001VERSION [unixtime]\001" 
-  putlog "1N3 ? !$hand! plod5 (CTCP flooding)" 
+  putlog "1N3 !$hand! plod5 (CTCP flooding)" 
   return 0 
  } 
  if {$rest==""} { 
@@ -9543,7 +9558,7 @@ proc pub_plod6 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest ,/*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/"
   puthelp "PRIVMSG $person :$rest ,/*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/"
   puthelp "NOTICE $person :$rest ,/*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*0,4-*0,12-*0,4-*0,12-* /*/*/*/0,4-*0,12-*0,4-*0,12-* /*/*/*/"
-  putlog "1N3 ?!$hand! plod6 $person"
+  putlog "1N3!$hand! plod6 $person"
   return 0 
  } 
  if {$rest==""} { 
@@ -9561,7 +9576,7 @@ proc pub_plod7 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest ,8,1|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||15,4@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@2,13#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%|,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%"
   puthelp "PRIVMSG $person :$rest ,13,4|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||4,15@#$%||@#$%||@#$%||@#$%||4,15@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@0,3#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%|,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%"
   puthelp "NOTICE $person :$rest ,10,12|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||15,4@#$%||@#$%||@#$%||@#$%||15,4@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@14,5#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%|,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#,|@#$%||@#$%||@#$%||@#$%||@#$%||@#$%||@#$%"
-  putlog "1N3 ? !$hand! plod7 $person"
+  putlog "1N3 !$hand! plod7 $person"
   return 0
  }
  if {$rest==""} {
@@ -9581,7 +9596,7 @@ proc pub_plod8 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest ,9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA"
   puthelp "PRIVMSG $person :$rest ,9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA"
   puthelp "NOTICE $person :$rest ,9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA 5,4hIyA 6,11hIyA 7,6hiyA 8,7hIyA 9,3hiyA 4,8hIyA 9,3hiyA"
-  putlog "1N3 ? !$hand! plod8 $person"
+  putlog "1N3 !$hand! plod8 $person"
   return 0
  }
  if {$rest==""} {
@@ -9599,7 +9614,7 @@ proc pub_plod9 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest ,4,11BeBeK 5aDuS 6kAlI 12WekZ13WekZ 14Wek1ZWek 15WekZ7WekZ 9,1BeBeK 13aDuS 12kAlI 4WekZW11ekZ We2kZWe7k Wek9ZWek10Z 8,2BeBeK a11DuS kA9lI We7kZWe0kZ WekZ11Wek We8kZWe13kZ 13,9BeBe1K aD12uS kAl3I We4kZWe7kZ Wek4ZWek W2ekZWe11kZ 12,4BeB14eK aD15uS kAl5I WekZ6WekZ Wek1ZWek Wek12ZWek13Z 11,6Be1BeK aDu2S kAl3I We4kZWe5kZ Wek7ZWek 8WekZ9Wek10Z 0,14BeBeK 14aDuS k13AlI W9ekZW4ekZ 11Wek7ZWek W8ekZW9ekZ 4,11BeBeK a12DuS 3kAl6I Wek5ZWek15Z We13kZWek W9ekZW2ekZ 9,1BeBeK a14DuS k14AlI W13ekZWe12kZ We11kZWek 10WekZ9WekZ 8,2BeBeK 7aDuS 6kAlI5 Wek4ZWekZ3 Wek2ZWek 1WekZW15ekZ 13,9Be14BeK 13aDuS k12AlI We10kZWek14Z We8kZWek 7WekZW6ekZ 12,7BeBeK 8aDuS 13kAlI 6WekZ5WekZ4 Wek3ZWek2 WekZ1WekZ"
   puthelp "PRIVMSG $person :$rest ,4,11BeBeK 5aDuS 6kAlI 12WekZ13WekZ 14Wek1ZWek 15WekZ7WekZ 9,1BeBeK 13aDuS 12kAlI 4WekZW11ekZ We2kZWe7k Wek9ZWek10Z 8,2BeBeK a11DuS kA9lI We7kZWe0kZ WekZ11Wek We8kZWe13kZ 13,9BeBe1K aD12uS kAl3I We4kZWe7kZ Wek4ZWek W2ekZWe11kZ 12,4BeB14eK aD15uS kAl5I WekZ6WekZ Wek1ZWek Wek12ZWek13Z 11,6Be1BeK aDu2S kAl3I We4kZWe5kZ Wek7ZWek 8WekZ9Wek10Z 0,14BeBeK 14aDuS k13AlI W9ekZW4ekZ 11Wek7ZWek W8ekZW9ekZ 4,11BeBeK a12DuS 3kAl6I Wek5ZWek15Z We13kZWek W9ekZW2ekZ 9,1BeBeK a14DuS k14AlI W13ekZWe12kZ We11kZWek 10WekZ9WekZ 8,2BeBeK 7aDuS 6kAlI5 Wek4ZWekZ3 Wek2ZWek 1WekZW15ekZ 13,9Be14BeK 13aDuS k12AlI We10kZWek14Z We8kZWek 7WekZW6ekZ 12,7BeBeK 8aDuS 13kAlI 6WekZ5WekZ4 Wek3ZWek2 WekZ1WekZ"
   puthelp "NOTICE $person :$rest ,4,11BeBeK 5aDuS 6kAlI 12WekZ13WekZ 14Wek1ZWek 15WekZ7WekZ 9,1BeBeK 13aDuS 12kAlI 4WekZW11ekZ We2kZWe7k Wek9ZWek10Z 8,2BeBeK a11DuS kA9lI We7kZWe0kZ WekZ11Wek We8kZWe13kZ 13,9BeBe1K aD12uS kAl3I We4kZWe7kZ Wek4ZWek W2ekZWe11kZ 12,4BeB14eK aD15uS kAl5I WekZ6WekZ Wek1ZWek Wek12ZWek13Z 11,6Be1BeK aDu2S kAl3I We4kZWe5kZ Wek7ZWek 8WekZ9Wek10Z 0,14BeBeK 14aDuS k13AlI W9ekZW4ekZ 11Wek7ZWek W8ekZW9ekZ 4,11BeBeK a12DuS 3kAl6I Wek5ZWek15Z We13kZWek W9ekZW2ekZ 9,1BeBeK a14DuS k14AlI W13ekZWe12kZ We11kZWek 10WekZ9WekZ 8,2BeBeK 7aDuS 6kAlI5 Wek4ZWekZ3 Wek2ZWek 1WekZW15ekZ 13,9Be14BeK 13aDuS k12AlI We10kZWek14Z We8kZWek 7WekZW6ekZ 12,7BeBeK 8aDuS 13kAlI 6WekZ5WekZ4 Wek3ZWek2 WekZ1WekZ"
-  putlog "1N3 ? !$hand! plod9 $person"
+  putlog "1N3 !$hand! plod9 $person"
   return 0
  }
  if {$rest==""} {
@@ -9618,13 +9633,15 @@ proc pub_plod10 {nick uhost hand channel rest} {
   puthelp "NOTICE $person :$rest ,1*kO2pEt3* !K4oPe5T! #6kOpE7t# [1KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#"
   puthelp "PRIVMSG $person :$rest ,1*kO2pEt3* !K4oPe5T! #6kOpE7t# [1KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#"
   puthelp "NOTICE $person :$rest ,1*kO2pEt3* !K4oPe5T! #6kOpE7t# [1KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#7 [Ko8PeT]9 {kOp10Et}11 %Ko12PeT13% @kO14pEt15@ *kO1pEt2* !KoP3eT! 4#kOp5Et# 6[KoP7eT] {8kOp9Et10} %Ko11PeT% 12@kO13pEt14@ 1*kO2pEt3* !K4oPe5T! #6kOpE7t# [8KoP9eT]10 {kO11pEt}12 %Ko13PeT14% @kO15pEt@ 1*kOp12Et3* !Ko4PeT5! #kO6pEt#"
-  putlog "1N3 ? !$hand! plod10 $person"
+  putlog "1N3 !$hand! plod10 $person"
   return 0
  }
  if {$rest==""} {
   puthelp "NOTICE $nick :1N3 Usage: plod10 <nick> <*add your insult to injury is better :)*>"
  }
 }
+
+proc saveuser {} {}
 
 ##### DALNET SERVER #######
 set servers {
@@ -9635,5 +9652,4 @@ set servers {
  serverbuffet.wa.us.dal.net
 }
 
-putlog "$notc ======================================="
-putlog "$notc     N3 Loaded"
+putlog "$notc IDWSN3 TCL Loaded"
