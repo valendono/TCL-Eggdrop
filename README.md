@@ -9,7 +9,7 @@ Web: http://www.nyit-nyit.net
 
 Greetz to #1stlink @ DALNET, awesome family beyond awesomeness!
 
-Allnetwork IRC Server (irc.allnetwork.org) staff and users
+AyoChat IRC Server (irc.ayochat.or.id) staff and users
 
 And the ancient channel #Gembels @ DALNET
 
@@ -66,7 +66,6 @@ Commands utama:
 
 
 Selengkapnya:
-!twitter 
 !tweet
 !private 
 !myfriends
@@ -76,22 +75,10 @@ Selengkapnya:
 !mymentions 
 !mymessages 
 !myprivates
-!tsearch 
-!user 
-!rate 
 +follow 
 -follow 
-+service 
--service 
-!services  
 !friends 
 !followers 
-+app 
--app 
-!apps 
-+track
--track 
-!track 
 !RTofme 
 !RTbyme 
 !RTtome 
