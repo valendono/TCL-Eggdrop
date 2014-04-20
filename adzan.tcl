@@ -1,6 +1,6 @@
 ######################################################################
 # Adzan By JoJo
-# Modifikasi otomatis oleh dono
+# Modifikasi otomatis oleh dono irc.ayochat.or.id CC License
 # Version 1.0
 # Initial release: 20 November 2009
 # Modifikasi oleh dono: 20 April 2014
