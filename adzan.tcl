@@ -1,55 +1,5 @@
 ######################################################################
 # Adzan By JoJo
-# Modifikasi otomatis oleh dono - irc.ayochat.or.id #help
-# Version 1.0
-# Initial release: 20 November 2009
-# Modifikasi oleh dono: 20 April 2014
-######################################################################
-bind pub o|m !adzanset pub:adzan
-bind pub - !adzan pub:sholat
-#bind pub o|m !adzanseta pub:adzanseta
-bind RAW - 391 pub:waktureply
-bind time - "30 * * * *" sholat
-bind time - "00 * * * *" sholat
-
-set basechannel "#help"
-
-proc sholat {mins hours days months years} {
-konekserver
-cetak 308 "Jakarta Pusat"
-}
-
-
-proc pub:sholat {nick uhost hand chan text} {
-        global daerah
-        set daerah ""
-     if {$text == ""} {
-          puthelp "NOTICE $nick :Gunakan: !adzan batam"
-          return 0
-         }
-set namanih [string tolower $text]
-switch -- $namanih {
-        "ambarawa" { set daerah "1"
-        set namadaerah "Ambarawa" }
-        "ambon" { set daerah "2"
-        set namadaerah "Ambon" }
-        "amlapura" { set daerah "3"
-        set namadaerah "Amlapura" }
-        "amuntai" { set daerah "4"
-        set namadaerah "Amuntai" }
-        "argamakmur" { set daerah "5"
-        set namadaerah "Argamakmur" }
-        "atambua" { set daerah "6"
-        set namadaerah "Atambua" }
-        "babo" { set daerah "7"
-        set namadaerah "Babo" }
-        "bagan siapiapi" { set daerah "8"
-        set namadaerah "Bagan Siapiapi" }
-                                                                               [ Wrote 905 lines ]
-
-[widhe@snoop ~/ayochat]$ cat adzan.tcl
-######################################################################
-# Adzan By JoJo
 # Modifikasi otomatis oleh dono
 # Version 1.0
 # Initial release: 20 November 2009
