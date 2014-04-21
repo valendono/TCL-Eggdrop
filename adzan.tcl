@@ -1,28 +1,80 @@
 ######################################################################
 # Adzan By JoJo
-# Modifikasi otomatis oleh dono irc.ayochat.or.id CC License
+# Modifikasi otomatis oleh dono - irc.ayochat.or.id #help
 # Version 1.0
 # Initial release: 20 November 2009
 # Modifikasi oleh dono: 20 April 2014
 ######################################################################
-bind pub - !adzan pub:adzan
-bind pub - !jadwaladzan pub:sholat
-#bind pub o|m !adzanset pub:adzanset
+bind pub o|m !adzanset pub:adzan
+bind pub - !adzan pub:sholat
+#bind pub o|m !adzanseta pub:adzanseta
 bind RAW - 391 pub:waktureply
 bind time - "30 * * * *" sholat
 bind time - "00 * * * *" sholat
 
 set basechannel "#help"
 
-proc sholat {} {
-        cetak 308 "Jakarta Pusat"
+proc sholat {mins hours days months years} {
+konekserver
+cetak 308 "Jakarta Pusat"
 }
+
 
 proc pub:sholat {nick uhost hand chan text} {
         global daerah
         set daerah ""
      if {$text == ""} {
-          puthelp "NOTICE $nick :Gunakan: !jadwaladzan batam"
+          puthelp "NOTICE $nick :Gunakan: !adzan batam"
+          return 0
+         }
+set namanih [string tolower $text]
+switch -- $namanih {
+        "ambarawa" { set daerah "1"
+        set namadaerah "Ambarawa" }
+        "ambon" { set daerah "2"
+        set namadaerah "Ambon" }
+        "amlapura" { set daerah "3"
+        set namadaerah "Amlapura" }
+        "amuntai" { set daerah "4"
+        set namadaerah "Amuntai" }
+        "argamakmur" { set daerah "5"
+        set namadaerah "Argamakmur" }
+        "atambua" { set daerah "6"
+        set namadaerah "Atambua" }
+        "babo" { set daerah "7"
+        set namadaerah "Babo" }
+        "bagan siapiapi" { set daerah "8"
+        set namadaerah "Bagan Siapiapi" }
+                                                                               [ Wrote 905 lines ]
+
+[widhe@snoop ~/ayochat]$ cat adzan.tcl
+######################################################################
+# Adzan By JoJo
+# Modifikasi otomatis oleh dono
+# Version 1.0
+# Initial release: 20 November 2009
+# Modifikasi oleh dono: 20 April 2014
+######################################################################
+bind pub o|m !adzanset pub:adzan
+bind pub - !adzan pub:sholat
+#bind pub o|m !adzanseta pub:adzanseta
+bind RAW - 391 pub:waktureply
+bind time - "30 * * * *" sholat
+bind time - "00 * * * *" sholat
+
+set basechannel "#help"
+
+proc sholat {mins hours days months years} {
+konekserver
+cetak 308 "Jakarta Pusat"
+}
+
+
+proc pub:sholat {nick uhost hand chan text} {
+        global daerah
+        set daerah ""
+     if {$text == ""} {
+          puthelp "NOTICE $nick :Gunakan: !adzan batam"
           return 0
          }
 set namanih [string tolower $text]
@@ -245,7 +297,7 @@ switch -- $namanih {
         set namadaerah "Kisaran" }
         "klaten" { set daerah "105"
         set namadaerah "Klaten" }
-        "kolaka" { set daerah "106"
+        "kolaka" { set daerah "1"
         set namadaerah "Kolaka" }
         "kota baru pulau laut" { set daerah "107"
         set namadaerah "Kota Baru Pulau Laut" }
@@ -341,6 +393,8 @@ switch -- $namanih {
         set namadaerah "Mempawah" }
         "menado" { set daerah "153"
         set namadaerah "Menado" }
+        "manado" { set daerah "153"
+        set namadaerah "Manado" }
         "mentok" { set daerah "154"
         set namadaerah "Mentok" }
         "merauke" { set daerah "155"
@@ -445,7 +499,7 @@ switch -- $namanih {
         set namadaerah "Poso" }
         "prabumulih" { set daerah "205"
         set namadaerah "Prabumulih" }
-        "praya" { set daerah "206"
+        "praya" { set daerah "2"
         set namadaerah "Praya" }
         "probolinggo" { set daerah "207"
         set namadaerah "Probolinggo" }
@@ -647,7 +701,7 @@ switch -- $namanih {
         set namadaerah "Wonogiri" }
         "wonosari" { set daerah "305"
         set namadaerah "Wonosari" }
-        "wonosobo" { set daerah "306"
+        "wonosobo" { set daerah "3"
         set namadaerah "Wonosobo" }
         "yogyakarta" { set daerah "307"
         set namadaerah "Yogyakarta" }
@@ -661,6 +715,7 @@ switch -- $namanih {
 proc cetak {daerah namadaerah} {
 global basechannel waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
   if {$daerah == ""} { set daerah 308 }
+  if {$namadaerah == ""} { set namadaerah "jakarta Pusat" }
   set connect [::http::geturl http://www.jadwalsholat.org/adzan/daily.php?id=$daerah]
   set files [::http::data $connect]
 
@@ -683,7 +738,7 @@ if {[llength $l] != 0} {
          regsub -all {<.+?>} $e {} e
 
 
-        putserv "PRIVMSG $basechannel :\[\002Adzan $namadaerah\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" }
+        puthelp "PRIVMSG $basechannel :\[\002Adzan $namadaerah\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" }
         set waktusubuh "$a:00"
         set waktudzuhur "$b:00"
         set waktuashar "$c:00"
@@ -691,14 +746,15 @@ if {[llength $l] != 0} {
         set waktuisya "$e:00"
 
 
-} else { putserv "PRIVMSG $basechannel :\[\002$daerah\002\] dimana itu kak ?" }
+} else { puthelp "PRIVMSG $basechannel :\[\002$daerah\002\] dimana itu kak ?" }
 
 }
+
 
 set jam "00:00:xx"
 set jamclean "00:00:00"
 set waktu "xx xx xx"
-set servtime "irc.ayochat.or.id"
+set servtime "delta.ca.us.ayochat.or.id"
 set parent ""
 set jamcocok "00:00:00"
 set cektiap 1
@@ -742,7 +798,7 @@ global botnick servtime waktu jam jamclean
  set temp2 [lindex [split $jam :] 1]
  set jamclean "$temp1:$temp2:00"
 
- set waktu "03$hari - 13$tanggal $bulan $tahun - 03$jam WIB"
+ set waktu "$hari - $tanggal $bulan $tahun - $jam WIB"
 
 }
 
@@ -805,9 +861,9 @@ proc pub:showadzan { text jamnya } {
 global basechannel adzanrange
 
 if { $adzanrange == "false" } {
-puthelp "PRIVMSG $basechannel :9,1--(9(83,1--(9(81,9*** Allahu akbar.. Allahu akbar.. *** 8,13,1)--9)8)9)3,1--"
-puthelp "PRIVMSG $basechannel :9,1 *** Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text ***"
-puthelp "PRIVMSG $basechannel :9,1--(9(83,1--(9(81,9*** Allahu akbar.. Allahu akbar.. *** 8,1)3,1--9)8)9)3,1--"
+puthelp "PRIVMSG $basechannel :Allahu akbar.. Allahu akbar.."
+puthelp "PRIVMSG $basechannel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah Jakarta Pusat dan sekitar nya"
+putquick "NOTICE $basechannel :$jamnya WIB - Sholat $text untuk Jakarta dan sekitarnya"
 set adzanrange "true"
 timer 2 turnoff:adzanrange
 return 0
@@ -823,8 +879,6 @@ set adzanrange "false"
 
 proc pub:adzan { nick uhost hand chan text } {
 global parent sedangrunning waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
-
-if { [llength $waktusubuh] != 0 } {cetak 308 "Jakarta Pusat"}
 
 set parent "adzan"
 set text [string tolower $text]
@@ -890,21 +944,11 @@ set tempjam [lindex $text 1]
 proc pub:adzanstatus {} {
 global basechannel waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktu parent
 set parent "adzanstatus"
-puthelp "PRIVMSG $basechannel :-------Adzan Status-------"
-puthelp "PRIVMSG $basechannel :$waktu"
-puthelp "PRIVMSG $basechannel :--------------------------"
-puthelp "PRIVMSG $basechannel :06Waktu subuh   : $waktusubuh"
-puthelp "PRIVMSG $basechannel :06Waktu dzuhur  : $waktudzuhur"
-puthelp "PRIVMSG $basechannel :06Waktu ashar   : $waktuashar"
-puthelp "PRIVMSG $basechannel :06Waktu maghrib : $waktumaghrib"
-puthelp "PRIVMSG $basechannel :06Waktu isya    : $waktuisya"
-puthelp "PRIVMSG $basechannel :--------------------------"
-puthelp "PRIVMSG $basechannel :Perintah !adzan start, !adzan stop, !adzan, !adzanset"
-puthelp "PRIVMSG $basechannel :--------------------------"
+puthelp "PRIVMSG $basechannel :Jakarta Pusat: $waktu - Subuh: $waktusubuh - Dzuhur  : $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya"
 }
 
 set init-server {
 pub:pengecekan
 }
 
-putlog "Adzan Time By JoJo - Modifikasi otomatis oleh dono"
+putlog "Adzan Time By JoJo - Modifikasi otomatis oleh dono - irc.ayochat.or.id"
