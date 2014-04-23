@@ -26,7 +26,6 @@ proc percetakan {} { cetak 308 "Jakarta Pusat" ""}
 proc otomatis {} {
 pub:pengecekan
 percetakan
-puthelp "NOTICE dono :Adzan diaktifkan"
 }
 
 proc sholat {mins hours days months years} { 
