@@ -40,7 +40,7 @@ percetakan
 
 
 proc pub:sholat {nick uhost hand chan text} {
-	global daerah
+	global daerah kodedaerah
 	set daerah ""
      if {$text == ""} {
           puthelp "NOTICE $nick :Gunakan: !adzan batam"
@@ -674,8 +674,8 @@ switch -- $namanih {
 	set namadaerah "Wonosobo" }
 	"yogyakarta" { set daerah "307" 
 	set namadaerah "Yogyakarta" }
-	default { set daerah "308" 
-	set namadaerah "Jakarta Pusat" }
+	default { set daerah "$kodedaerah" 
+	set namadaerah "$daerah" }
 	}
 
 	cetak $daerah $namadaerah $chan
