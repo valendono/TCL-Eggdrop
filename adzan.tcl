@@ -830,13 +830,13 @@ konekserver
 }
 
 proc pub:showadzan { text jamnya } {
-global multichan adzanrange kodedaerah
+global multichan adzanrange kodedaerah daerah
 
 if { $adzanrange == "false" } {
         foreach channel $multichan {
 		puthelp "PRIVMSG $channel : Allahu akbar.. Allahu akbar.."
 		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah $kodedaerah dan sekitar nya"
-		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $daerah dan sekitarnya"
+		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $kodedaerah dan sekitarnya"
         }
 
 set adzanrange "true"
