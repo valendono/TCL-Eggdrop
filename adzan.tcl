@@ -19,13 +19,13 @@ bind RAW - 391 pub:waktureply
 bind time - "00 * * * *" sholat
 set multichan "#help #indowebster"
 set sedangrunning "true"
-set kodedaerah "308"
-set daerah "Jakarta Pusat"
+set kodedaerah "Jakarta Pusat"
+set daerah "308"
 
 # ganti daerah yang diinginkan
 proc percetakan {} { 
 	global kodedaerah daerah
-	cetak $kodedaerah "$daerah" ""
+	cetak $daerah "$kodedaerah" ""
 	}
 
 proc otomatis {} {
@@ -830,12 +830,12 @@ konekserver
 }
 
 proc pub:showadzan { text jamnya } {
-global multichan adzanrange daerah
+global multichan adzanrange kodedaerah
 
 if { $adzanrange == "false" } {
         foreach channel $multichan {
 		puthelp "PRIVMSG $channel : Allahu akbar.. Allahu akbar.."
-		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah $daerah dan sekitar nya"
+		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah $kodedaerah dan sekitar nya"
 		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $daerah dan sekitarnya"
         }
 
@@ -890,7 +890,7 @@ set parent "adzanstatus"
 set init-server {
 global kodedaerah daerah
 putlog "Init server dan lakukan pengecekan" 
-cetak $kodedaerah "$daerah" ""
+cetak $daerah "$kodedaerah" ""
 set sedangrunning "true"
 pub:pengecekan
 }
