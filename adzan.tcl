@@ -13,6 +13,7 @@
 ######################################################################
 ######################################################################
 
+# bind pub o|m !adzanset pub:adzan #enable jika diperlukan, tapi gak ah, kamu ndak perlu ini, serba otomatis
 bind pub - !adzan pub:sholat
 bind RAW - 391 pub:waktureply
 bind time - "00 * * * *" sholat
@@ -837,7 +838,6 @@ if { $adzanrange == "false" } {
 		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah $kodedaerah dan sekitar nya"
 		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $kodedaerah dan sekitarnya"
         }
-
 
 set adzanrange "true"
 timer 2 turnoff:adzanrange
