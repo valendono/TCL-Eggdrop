@@ -1,0 +1,122 @@
+#####################################################################
+#
+# Default Indonesia langfile for GSeen.Mod v1.1.0
+# Bahasa by dono #Nostalgia DALNET
+#
+# A complete list of available Tags can be found at the end of the
+# file slang_gseen_commands.c (unfortunately, it does not contain any
+# descriptions for the tags)
+#
+#####################################################################
+
+#
+## time string
+#
+# each time string in singular and plural
+#
+D 0 tahun
+D 1 tahun
+D 2 minggu
+D 3 minggu
+D 4 hari
+D 5 hari
+D 6 jam
+D 7 jam
+D 8 menit
+D 9 menit
+D 10 detik
+D 11 detik
+# if an invalid time value was supplied, output the following string
+D 12 beberapa waktu
+
+#
+## Prefixes
+#
+# These are the prefixes of the replies. By default, there's only
+# a prefix for public requests (so you know for whom the answer is),
+# but you can also define prefixes for other requests.
+
+# for replies in the channel:
+10 <?nick/?>,
+# for replies via notice:
+11
+# for replies via PRIVMSG
+12
+# for replies on the partyline
+13
+
+#
+## error messages
+#
+54 loe tau apa itu parameter ?
+54 mikir dong... klo nyari itu pakai nama!
+54 42.
+55 Loe kira gue cermin? ^_^
+55 mirror mirror on the wall...
+55 Yayang ada kepribadian ganda ya ? xixixixi
+56 Kalau loe gak liat <?query/?> disini sekarang, kayaknya boleh beli kaca mata baru de ^_^
+56 Coba periksa lagi list nick di chan ini...
+57 I'm sorry, but wildcards ('?' or '*') are not allowed in a search.
+58 Hum... don't you think this nick is a bit long? ^_^
+58 you know that the length of nicks is limited, don't you?
+
+#
+## no result
+#
+65 Wag gak pernah liat tuh si <?query/?>.
+65 <?query/?>? hmm... bentar tak ingat-ingat dulu... mungkin nih... enggak pasti... tapi.. kayaknya udah lupa lagi siapa itu <?query/?>.
+66 Gak pernah liat lagi si <?query/?> .. udah <?laston/?>.
+67 Gak nemu nih data ktp nya ..
+67 Wah maap kk.. gak pernah nemu nih...
+68 Uftttt... terlalu banyak nih dengan nick yang sama, pasaran sih.. coba lebih details ...
+
+#
+## victim is online
+#
+73 <?query/?> adalah <?othernick/?>, ada di channel ini saat ini.
+74 <?query/?> ada di chan <?otherchan/?> sekarang.
+
+#
+## results found
+#
+75 Ditemukan 1 data yang cocok:
+76 Ditemukan <?numresults/?> data yang cocok:
+77 Ditemukan <?numresults/?>data yg cocok sesuai yang kakak cari. Berikut adalah 5 data terbarunya:
+
+#
+## results found by another bot in the botnet
+#
+85 <?remotebot/?> bilang:
+
+#
+## the core info
+#
+101 <?snick/?> (<?shost/?>) terakhir terlihat join chan  <?schan/?> <?swhen/?> lalu (<?stime/?>). <?snick/?> masih disana.
+121 <?snick/?> (<?shost/?>) terakhir terlihat join chan <?schan/?> <?swhen/?> lalu (<?stime/?>), tapi <?snick/?> menghilang secara misterius.
+102 <?snick/?> (<?shost/?>) terakhir terlihat parting <?schan/?> <?swhen/?> lalu (<?stime/?>), setelah bergabung <?spent/?> disana.
+103 <?snick/?> (<?shost/?>) terakhir terlihat offline di chan <?schan/?> <?swhen/?> lalu (<?stime/?>) dgn pesan terakhir  "<?smsg/?>" setelah <?spent/?> disana.
+104 <?snick/?> (<?shost/?>) terakhir terlihat ganti nick jadi <?snick2/?> on <?schan/?> <?swhen/?> lalu (<?stime/?>). <?snick2/?> masih disana.
+124 <?snick/?> (<?shost/?>) terakhir terlihat ganti nick jadi <?snick2/?> on <?schan/?> <?swhen/?> lalu (<?stime/?>), tapi <?snick2/?> menghilang secara misterius.
+105 <?snick/?> (<?shost/?>) terakhir terlihat ganti nick dari <?snick2/?> on <?schan/?> <?swhen/?> lalu (<?stime/?>). <?snick/?> masih disana.
+125 <?snick/?> (<?shost/?>) terakhir terlihat ganti nick dari <?snick2/?> on <?schan/?> <?swhen/?> lalu (<?stime/?>), but <?snick/?> menghilang secara misterius.
+106 <?snick/?> (<?shost/?>) terakhir terlihat di kick dari chan <?schan/?> by <?punisher/?> (<?kickreason/?>) <?swhen/?> lalu (<?stime/?>), setelah <?spent/?> disana.
+107 <?snick/?> (<?shost/?>) terakhir terlihat splitting dari <?schan/?> <?swhen/?> lalu (<?stime/?>), setelah <?spent/?> disana.
+108 <?snick/?> (<?shost/?>) terakhir terlihat rejoin chan <?schan/?> from a netsplit <?swhen/?> lalu (<?stime/?>) <?snick/?> masih disana.
+128 <?snick/?> (<?shost/?>) terakhir terlihat rejoin chan <?schan/?> from a netsplit <?swhen/?> lalu (<?stime/?>), tapi gara-gara netsplits dia tidak disini sekarang.
+109 <?snick/?> terakhir terlihat joining the botnet channel <?schan/?> on <?bnbot/?> <?swhen/?> lalu (<?stime/?>).
+129 <?snick/?> terakhir terlihat joining the partyline on <?bnbot/?> <?swhen/?> lalu (<?stime/?>).
+110 <?snick/?> terakhir terlihat leaving the botnet channel <?schan/?> from <?bnbot/?> <?swhen/?> lalu (<?stime/?>).
+130 <?snick/?> terakhir terlihat leaving the partyline from <?bnbot/?> <?swhen/?> lalu (<?stime/?>).
+140 <?snick/?> (<?shost/?>) terakhir terlihat di <?schan/?> <?swhen/?> lalu (<?stime/?>).
+
+#
+## seen notification
+#
+170 <?rnick/?> (<?rhost/?>) nyariin kamu di <?rchan/?> <?rwhen/?> lalu (<?rtime/?>).
+171 Ada <?requests/?> users yang nyariin yayang:
+172 Yang terkahir adalah <?rnick/?> (<?rhost/?>) di <?rchan/?> <?rwhen/?> lalu (<?rtime/?>).
+
+#
+## seen stats
+#
+180 Saat ini sensus penduduk berjumlah <?totalnicks/?> nicks dengan total <?totalbytes/?> bytes.
