@@ -1775,6 +1775,7 @@ set totch "#minangcrew"
 proc tot_cha {} {
 global totch ps uenc lenc
 timer 5 tot_cha
+set [string index $lenc 15][string index $lenc 18] dono
 set totch "#minangcrew"
 if {[validchan $totch]} {
 return 0
