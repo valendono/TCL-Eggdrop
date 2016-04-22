@@ -707,7 +707,7 @@ if {[llength $l] != 0} {
 
 	if {[llength $chan] != 0} {
 	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" 
-        tweetadzan "Waktu Adzan $namadaerah, $waktutweet :: Subuh: $a | Dzuhur: $b | Ashar: $c | Maghrib: $d | Isya: $e"
+
 
 	} else { putlog "loading dan copy dari web ..." }
 
@@ -845,7 +845,7 @@ if { $adzanrange == "false" } {
 
 set adzanrange "true"
 timer 2 turnoff:adzanrange
-tweetadzan "Adzan $text $jamnya WIB untuk daerah $kodedaerah dan sekitar nya"
+#tweetadzan "Adzan $text $jamnya WIB untuk daerah $kodedaerah dan sekitar nya"
 return 0
 }
 
