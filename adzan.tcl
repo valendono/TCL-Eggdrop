@@ -1,3 +1,4 @@
+
 ######################################################################
 # Adzan By JoJo
 # Modifikasi otomatis oleh dono - irc.ayochat.or.id
@@ -27,7 +28,6 @@ proc percetakan {} {
 	global kodedaerah daerah
 	cetak $daerah "$kodedaerah" ""
 	}
-
 proc otomatis {} {
 pub:pengecekan
 percetakan
@@ -683,8 +683,8 @@ switch -- $namanih {
 }
 
 proc cetak {daerah namadaerah chan} {
-global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
-  set connect [::http::geturl http://www.jadwalsholat.org/adzan/daily.php?id=$daerah]
+global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktutweet
+  set connect [::http::geturl http://sholat.gq/adzan/daily.php?id=$daerah]
   set files [::http::data $connect]
 
     set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>.*?</td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr class="table_block_title"><td colspan="9"><b>&nbsp;:: Parameter</b></td></tr>} $files]
@@ -706,7 +706,9 @@ if {[llength $l] != 0} {
          regsub -all {<.+?>} $e {} e
 
 	if {[llength $chan] != 0} {
-	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" 
+	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" 
+        tweetadzan "Waktu Adzan $namadaerah, $waktutweet :: Subuh: $a | Dzuhur: $b | Ashar: $c | Maghrib: $d | Isya: $e"
+
 	} else { putlog "loading dan copy dari web ..." }
 
         set waktusubuh "$a:00"
@@ -738,7 +740,7 @@ putquick "TIME $servtime"
 
 #set jam, jamclean, waktu
 proc setwaktu { channel arguments } {
-global botnick servtime waktu jam jamclean
+global botnick servtime waktu jam jamclean waktutweet
 
  set day [lindex [split $arguments] 2]
  if {$day == ":Monday"} { set hari "Senin" }
@@ -768,7 +770,8 @@ global botnick servtime waktu jam jamclean
  set temp2 [lindex [split $jam :] 1]
  set jamclean "$temp1:$temp2:00"
   
- set waktu "$hari - $tanggal $bulan $tahun - $jam WIB"
+ set waktu "$hari, $tanggal $bulan $tahun $jam WIB"
+ set waktutweet "$tanggal $bulan $tahun"
 
 }
 
@@ -830,17 +833,19 @@ konekserver
 }
 
 proc pub:showadzan { text jamnya } {
-global multichan adzanrange kodedaerah daerah
-
+global multichan adzanrange kodedaerah daerah waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
+	
 if { $adzanrange == "false" } {
         foreach channel $multichan {
-		puthelp "PRIVMSG $channel : Allahu akbar.. Allahu akbar.."
-		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah solat $text untuk daerah $kodedaerah dan sekitar nya"
+#		puthelp "PRIVMSG $channel : Allahu akbar.. Allahu akbar.. Hayya' Alash Shalaah..."
+		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah sholat $text untuk daerah $kodedaerah dan sekitar nya"
+                puthelp "PRIVMSG $channel :Jadwal Adzan Hari ini: Subuh: $waktusubuh - Dzuhur: $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya"
 		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $kodedaerah dan sekitarnya"
         }
 
 set adzanrange "true"
 timer 2 turnoff:adzanrange
+tweetadzan "Adzan $text $jamnya WIB untuk daerah $kodedaerah dan sekitar nya"
 return 0
 }
 
@@ -882,7 +887,7 @@ proc pub:adzanstatus {} {
 global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktu parent
 set parent "adzanstatus"
         foreach channel $multichan {
-	        puthelp "PRIVMSG $channel :Jakarta Pusat: $waktu - Subuh: $waktusubuh - Dzuhur  : $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya" 
+	        puthelp "PRIVMSG $channel :Jakarta Pusat: $waktu - Subuh: $waktusubuh - Dzuhur: $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya" 
         }
 
 }
