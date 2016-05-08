@@ -2,45 +2,66 @@
 ######################################################################
 # Adzan By JoJo
 # Modifikasi otomatis oleh dono - irc.ayochat.or.id
-# Version 1.0.1
+# Version 1.0.2
 # Initial release: 20 November 2009
 # Modifikasi oleh dono: 20 April 2014
-# last update 23 April 2014
+# last update 08 May 2016
 ######################################################################
 # Q: Bagaimana ganti daerah default ?
 # A: Cari cetak 308 "Jakarta Pusat" "" gantilah sesuai daerah yang diinginkan
 # Q: Trus apalagi yang harus di update dan supaya tcl ini jalan ?
 # A: Sebut nama dono 2x lalu wajib memakai http.tcl dan set lah `multichan-nya'
 ######################################################################
+# Update 1.0.2
+# Tidak berpatokan pada server tertentu, tapi pada jam pada mesin server menjalankan eggdrop
 ######################################################################
+######################################################################
+package require http
 
-# bind pub o|m !adzanset pub:adzan #enable jika diperlukan, tapi gak ah, kamu ndak perlu ini, serba otomatis
-bind pub - !adzan pub:sholat
-bind RAW - 391 pub:waktureply
-bind time - "00 * * * *" sholat
-set multichan "#help #indowebster"
-set sedangrunning "true"
+set init-server {
+        putlog "Init server dan lakukan pengecekan"
+        set sedangrunning "true"
+        set kodedaerah "Jakarta Pusat"
+	set daerah "308"
+        otomatis
+}
+
 set kodedaerah "Jakarta Pusat"
 set daerah "308"
+
+#bind pub o|m !adzanstart pub:adzan 
+#enable jika diperlukan, tapi gak ah, kamu ndak perlu ini, serba otomatis
+bind pub - !adzan pub:sholat
+bind pub - !adzanstatus pub:adzanstatus 
+bind time - "00 * * * *" sholat
+set shelltime_setting(format) "%A %B %d %Y -- %H:%M:%S"
+set multichan "#jakarta #indonesia #bawel"
+set sedangrunning "true"
+set bedawaktuserver "5" #artinya +5, saat ini masih tidak bisa -1 atau - lainnya
+
 
 # ganti daerah yang diinginkan
 proc percetakan {} { 
 	global kodedaerah daerah
 	cetak $daerah "$kodedaerah" ""
 	}
+
 proc otomatis {} {
-pub:pengecekan
-percetakan
+	pub:pengecekan
+	percetakan
 }
 
 proc sholat {mins hours days months years} { 
-pub:pengecekan
-percetakan
+	pub:pengecekan
+	percetakan
 }
 
 
+proc pub:jam {nick uhost hand chan text} {
+	setwaktu
+}
 proc pub:sholat {nick uhost hand chan text} {
-	global daerah kodedaerah
+	global daerah kodedaerah 
 	set daerah ""
      if {$text == ""} {
           puthelp "NOTICE $nick :Gunakan: !adzan batam"
@@ -110,8 +131,6 @@ switch -- $namanih {
 	set namadaerah "Batam" }
 	"batang" { set daerah "31" 
 	set namadaerah "Batang" }
-	"batu" { set daerah "32" 
-	set namadaerah "Batu" }
 	"baturaja" { set daerah "33" 
 	set namadaerah "Baturaja" }
 	"batusangkar" { set daerah "34" 
@@ -674,11 +693,20 @@ switch -- $namanih {
 	set namadaerah "Wonosobo" }
 	"yogyakarta" { set daerah "307" 
 	set namadaerah "Yogyakarta" }
-	default { set daerah "$daerah" 
+	"jakarta pusat" { set daerah "308"
+	set namadaerah "Jakarta Pusat" }
+        "batu" { set daerah "32"
+        set namadaerah "Batu" }
+
+	default { 
+	if { $daerah == ""} { set daerah "308" } else 
+	{ set daerah "$daerah"	 
 	set namadaerah "$kodedaerah" }
 	}
-
+	
+	if { $daerah == ""} { set daerah "308" }
 	cetak $daerah $namadaerah $chan
+
 
 }
 
@@ -687,27 +715,34 @@ global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktut
   set connect [::http::geturl http://sholat.gq/adzan/daily.php?id=$daerah]
   set files [::http::data $connect]
 
-    set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>.*?</td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr class="table_block_title"><td colspan="9"><b>&nbsp;:: Parameter</b></td></tr>} $files]
+    set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>.*?</td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr class="table_block_title"><td colspan="9"><b>&nbsp;:: Parameter</b></td></tr>.*?<tr class="table_block_content"><td align="right" colspan="2">Arah :</td><td colspan="5">(.*?) \&deg\; ke Mekah</td></tr>.*?<tr class="table_block_content"><td align="right" colspan="2">Jarak :</td><td colspan="5">(.*?) km ke Mekah</td></tr>} $files]
 
 if {[llength $l] != 0} {
 
-     foreach {black a b c d e} $l {
+     foreach {black a b c d e f g} $l {
 
          set a [string trim $a " \n"]
          set b [string trim $b " \n"]
          set c [string trim $c " \n"]
          set d [string trim $d " \n"]
      	 set e [string trim $e " \n"]
+         set f [string trim $f " \n"]
+         set g [string trim $g " \n"]
 
          regsub -all {<.+?>} $a {} a
          regsub -all {<.+?>} $b {} b
          regsub -all {<.+?>} $c {} c
          regsub -all {<.+?>} $d {} d
          regsub -all {<.+?>} $e {} e
+         regsub -all {<.+?>} $f {} f
+         regsub -all {<.+?>} $g {} g
 
 	if {[llength $chan] != 0} {
-	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" 
+	setwaktu
+	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e - Arah $f derajat \& jarak $g KM ke Mekah" 
 
+	set daerah ""
+	set namadaerah ""
 
 	} else { putlog "loading dan copy dari web ..." }
 
@@ -726,32 +761,79 @@ if {[llength $l] != 0} {
 set jam "00:00:xx"
 set jamclean "00:00:00"
 set waktu "xx xx xx"
-set servtime "delta.ca.us.ayochat.or.id"
 set parent ""
 set jamcocok "00:00:00"
 set cektiap 1
 set sedangrunning "true"
 set adzanrange "false"
 
-proc konekserver {} {
-global botnick servtime
-putquick "TIME $servtime"
-}
+
+
+#######################################################################
+# Set the clock format here. See below for a list of format settings. #
+# ------------------------------------------------------------------- #
+#                                                                     #
+# %% - Insert a %.                                                    #
+# %a - Abbreviated weekday name (Mon, Tue, etc.).                     #
+# %A - Full weekday name (Monday, Tuesday, etc.).                     #
+# %b - Abbreviated month name (Jan, Feb, etc.).                       #
+# %B - Full month name.                                               #
+# %c - Locale specific date and time.                                 #
+# %d - Day of month (01 - 31).                                        #
+# %H - Hour in 24-hour format (00 - 23).                              #
+# %I - Hour in 12-hour format (00 - 12).                              #
+# %j - Day of year (001 - 366).                                       #
+# %m - Month number (01 - 12).                                        #
+# %M - Minute (00 - 59).                                              #
+# %p - AM/PM indicator.                                               #
+# %S - Seconds (00 - 59).                                             #
+# %U - Week of year (00 - 52), Sunday is the first day of the week.   #
+# %w - Weekday number (Sunday = 0).                                   #
+# %W - Week of year (00 - 52), Monday is the first day of the week.   #
+# %x - Locale specific date format.                                   #
+# %X - Locale specific time format.                                   #
+# %y - Year without century (00 - 99).                                #
+# %Y - Year with century (e.g. 1990)                                  #
+# %Z - Time zone name.                                                #
+# Supported on some systems only:                                     #
+# %D - Date as %m/%d/%y.                                              #
+# %e - Day of month (1 - 31), no leading zeros.                       #
+# %h - Abbreviated month name.                                        #
+# %n - Insert a newline.                                              #
+# %r - Time as %I:%M:%S %p.                                           #
+# %R - Time as %H:%M.                                                 #
+# %t - Insert a tab.                                                  #
+# %T - Time as %H:%M:%S.                                              #
+#######################################################################
+
+#bind pub - !startadzan shelljam_pub
+
+
+#proc shelljam_pub {nick uhost hand chan text} {
+#	global kodedaerah daerah
+#	putlog "Init server dan lakukan pengecekan"
+#	cetak 308 "Jakarta Puisat" ""
+#	set sedangrunning "true"
+#	pub:pengecekan
+#	otomatis
+#}
+
 
 #set jam, jamclean, waktu
-proc setwaktu { channel arguments } {
-global botnick servtime waktu jam jamclean waktutweet
+proc setwaktu { } {
+global botnick waktu jam jamclean waktutweet shelltime_setting bedawaktuserver
+set arguments [clock format [clock seconds] -format $shelltime_setting(format)]
+ set day [lindex [split $arguments] 0]
 
- set day [lindex [split $arguments] 2]
- if {$day == ":Monday"} { set hari "Senin" }
- if {$day == ":Tuesday"} { set hari "Selasa" }
- if {$day == ":Wednesday"} { set hari "Rabu" }
- if {$day == ":Thursday"} { set hari "Kamis" }
- if {$day == ":Friday"} { set hari "Jum'at" }
- if {$day == ":Saturday"} { set hari "Sabtu" }
- if {$day == ":Sunday"} { set hari "Minggu" }
- set tanggal [lindex [split $arguments] 4]
- set month [lindex [split $arguments] 3]
+ if {$day == "Monday"} { set hari "Senin" }
+ if {$day == "Tuesday"} { set hari "Selasa" }
+ if {$day == "Wednesday"} { set hari "Rabu" }
+ if {$day == "Thursday"} { set hari "Kamis" }
+ if {$day == "Friday"} { set hari "Jum'at" }
+ if {$day == "Saturday"} { set hari "Sabtu" }
+ if {$day == "Sunday"} { set hari "Minggu" }
+ set tanggal [lindex [split $arguments] 2]
+ set month [lindex [split $arguments] 1]
  if {$month == "January"} { set bulan "Januari" }
  if {$month == "February"} { set bulan "Februari" }
  if {$month == "March"} { set bulan "Maret" }
@@ -764,10 +846,11 @@ global botnick servtime waktu jam jamclean waktutweet
  if {$month == "October"} { set bulan "Oktober" }
  if {$month == "November"} { set bulan "November" }
  if {$month == "December"} { set bulan "Desember" }
- set tahun [lindex [split $arguments] 5]
- set jam [lindex [split $arguments] 7]
- set temp1 [lindex [split $jam :] 0]
+ set tahun [lindex [split $arguments] 3]
+ set jam [lindex [split $arguments] 5]
+ set temp11 [lindex [split $jam :] 0]
  set temp2 [lindex [split $jam :] 1]
+ set temp1 [expr $temp11+$bedawaktuserver]
  set jamclean "$temp1:$temp2:00"
   
  set waktu "$hari, $tanggal $bulan $tahun $jam WIB"
@@ -786,9 +869,10 @@ return 0
 
 }
 
-proc pub:waktureply { from keyword arguments } {
+proc pub:waktureply { } {
 global multichan parent
-setwaktu "help" $arguments
+setwaktu
+#$arguments
 
 if { $parent == "showadzan" } {
 	pub:adzanstatus
@@ -798,10 +882,13 @@ if { $parent == "showadzan" } {
 
 proc pub:pengecekan {} {
 global sedangrunning cektiap waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya multichan
+
+#puthelp "PRIVMSG #gembels :isya: $waktuisya sedanrunning: $sedangrunning"
 if {[llength $waktusubuh] == 0} { percetakan }
 
 if { $sedangrunning == "true" } {
-konekserver
+#konekserver
+setwaktu
 
 if { [iscocok $waktusubuh] } {
 	pub:showadzan "Subuh" $waktusubuh
@@ -825,12 +912,10 @@ if { [iscocok $waktuisya] } {
 
 timer [expr $cektiap] pub:pengecekan
 		
-}
+	}
 }
 
-proc pub:setkonekserver {} {
-konekserver
-}
+
 
 proc pub:showadzan { text jamnya } {
 global multichan adzanrange kodedaerah daerah waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
@@ -839,8 +924,8 @@ if { $adzanrange == "false" } {
         foreach channel $multichan {
 #		puthelp "PRIVMSG $channel : Allahu akbar.. Allahu akbar.. Hayya' Alash Shalaah..."
 		puthelp "PRIVMSG $channel :Waktu tepat menunjukan pukul $jamnya WIB, waktunya utk melaksanakan ibadah sholat $text untuk daerah $kodedaerah dan sekitar nya"
-                puthelp "PRIVMSG $channel :Jadwal Adzan Hari ini: Subuh: $waktusubuh - Dzuhur: $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya"
-		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $kodedaerah dan sekitarnya"
+                puthelp "PRIVMSG $channel :Jadwal Adzan $kodedaerah Hari ini: Subuh: $waktusubuh - Dzuhur: $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya"
+#		putquick "NOTICE $channel :$jamnya WIB - Sholat $text untuk $kodedaerah dan sekitarnya"
         }
 
 set adzanrange "true"
@@ -857,48 +942,20 @@ set adzanrange "false"
 }
 
 
-proc pub:adzan { nick uhost hand chan text } {
-global parent sedangrunning waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya
-if { [llength $waktusubuh] != 0} { 
 
-set parent "adzan"
-set text [string tolower $text]
-
-     if {[string match "#*" $text]} {
-          puthelp "NOTICE $nick :Gunakan: !adzan start , atau !adzan stop"
-          return 0
-     } elseif {$text == "start" && [isop $nick $chan] } {
-	      set sedangrunning "true"
-		  pub:pengecekan
-		  puthelp "NOTICE $nick :Adzan diaktifkan"
-	 } elseif {$text == "stop" && [isop $nick $chan] } {
-		  set sedangrunning "false"
-		  puthelp "NOTICE $nick :Adzan berhenti"
-	 } elseif {$text == ""} {
-		  konekserver
-		  set parent "showadzan"
-     }
-} else { percetakan }
-
-}
 
 
 proc pub:adzanstatus {} {
 global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktu parent
 set parent "adzanstatus"
         foreach channel $multichan {
-	        puthelp "PRIVMSG $channel :Jakarta Pusat: $waktu - Subuh: $waktusubuh - Dzuhur: $waktudzuhur - Ashar: $waktuashar - Maghrib : $waktumaghrib - Isya: $waktuisya" 
+	        puthelp "PRIVMSG $channel :Adzan: ON"
         }
 
 }
 
-set init-server {
-global kodedaerah daerah
-putlog "Init server dan lakukan pengecekan" 
-cetak $daerah "$kodedaerah" ""
-set sedangrunning "true"
-pub:pengecekan
-}
+
+
 
 
 putlog "Adzan Time By JoJo - Modifikasi otomatis oleh dono - irc.ayochat.or.id"
