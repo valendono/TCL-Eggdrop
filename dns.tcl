@@ -76,7 +76,7 @@ proc resolve_rep {ip host status chan hostip} {
   set connect3 [::http::geturl http://whatismyipaddress.com/ip/$ip]
   set files3 [::http::data $connect3]
   ::http::cleanup $files3
-    regexp -- {ISP:</th><td>(.*?)</td></tr><tr><th>Organization} $files3 - isp
+    regexp -- {ISP:</th><td>(.*?)</td></tr>.*?<tr><th>Organization} $files3 - isp
     regexp -- {Country:</th><td>(.*?) <img src=} $files3 - country
     regexp -- {Hostname:</th><td>(.*?)</td></tr>} $files3 - hostname
     regexp -- {State/Region:</th><td>(.*?)</td></tr>} $files3 - state
