@@ -37,7 +37,8 @@ bind time - "00 * * * *" sholat
 set shelltime_setting(format) "%A %B %d %Y -- %H:%M:%S"
 set multichan "#jakarta #indonesia #bawel"
 set sedangrunning "true"
-set bedawaktuserver "5" #artinya +5, saat ini masih tidak bisa -1 atau - lainnya
+set bedawaktuserver "5" 
+#artinya +5, saat ini masih tidak bisa -1 atau - lainnya
 
 
 # ganti daerah yang diinginkan
@@ -63,7 +64,7 @@ proc pub:jam {nick uhost hand chan text} {
 proc pub:sholat {nick uhost hand chan text} {
 	global daerah kodedaerah 
 	set daerah ""
-     if {$text == ""} {
+	if {$text == ""} {
           puthelp "NOTICE $nick :Gunakan: !adzan batam"
           return 0
 	 }
@@ -700,14 +701,14 @@ switch -- $namanih {
 
 	default { 
 	if { $daerah == ""} { set daerah "308" } else 
-	{ set daerah "$daerah"	 
-	set namadaerah "$kodedaerah" }
+		{ set daerah "$daerah"	 
+		  set namadaerah "$kodedaerah" }
 	}
 	
 	if { $daerah == ""} { set daerah "308" }
 	cetak $daerah $namadaerah $chan
 
-
+	}
 }
 
 proc cetak {daerah namadaerah chan} {
