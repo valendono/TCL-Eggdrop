@@ -17,29 +17,38 @@
 ######################################################################
 ######################################################################
 package require http
+#timer 5 runningoi
 
-set init-server {
-        putlog "Init server dan lakukan pengecekan"
-        set sedangrunning "true"
-        set kodedaerah "Jakarta Pusat"
-	set daerah "308"
-        otomatis
+proc runningoi {} {
+set shelltime_setting(format) "%A %B %d %Y -- %H:%M:%S"
+set multichan "#jakarta #indonesia #bawel #gembels"
+set sedangrunning "true"
+set bedawaktuserver "5"
+set sedangrunning "true"
+set kodedaerah "Jakarta Pusat"
+set namadaerah "Jakarta Pusat"
+set daerah "308"
+cetak $daerah "$kodedaerah" ""
+pub:pengecekan
+percetakan
 }
 
 set kodedaerah "Jakarta Pusat"
+set namadaerah "Jakarta Pusat"
 set daerah "308"
 
 #bind pub o|m !adzanstart pub:adzan 
 #enable jika diperlukan, tapi gak ah, kamu ndak perlu ini, serba otomatis
 bind pub - !adzan pub:sholat
-bind pub - !adzanstatus pub:adzanstatus 
-bind time - "00 * * * *" sholat
+#bind pub - !adzanstatus pub:adzanstatus 
+bind time - "* * * * *" sholat
 set shelltime_setting(format) "%A %B %d %Y -- %H:%M:%S"
-set multichan "#jakarta #indonesia #bawel #gembels #nostalgia"
+set multichan "#jakarta #indonesia #bawel #gembels"
 set sedangrunning "true"
 set bedawaktuserver "5" 
 #artinya +5, saat ini masih tidak bisa -1 atau - lainnya
 
+set sedangrunning "true"
 
 # ganti daerah yang diinginkan
 proc percetakan {} { 
@@ -47,14 +56,14 @@ proc percetakan {} {
 	cetak $daerah "$kodedaerah" ""
 	}
 
-proc otomatis {} {
+proc sholat {mins hours days months years} { 
 	pub:pengecekan
 	percetakan
 }
 
-proc sholat {mins hours days months years} { 
-	pub:pengecekan
-	percetakan
+proc otomatis {} {
+        pub:pengecekan
+        percetakan
 }
 
 
@@ -706,39 +715,41 @@ switch -- $namanih {
 		}
 	}	
 	cetak $daerah $namadaerah $chan
-
 }
 
 proc cetak {daerah namadaerah chan} {
 global multichan waktusubuh waktudzuhur waktuashar waktumaghrib waktuisya waktutweet
-  set connect [::http::geturl http://sholat.gq/adzan/daily.php?id=$daerah]
+  set connect [::http::geturl http://jadwal-sholat.info/daily.php?id=$daerah]
   set files [::http::data $connect]
 
-    set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>.*?</td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr class="table_block_title"><td colspan="9"><b>&nbsp;:: Parameter</b></td></tr>.*?<tr class="table_block_content"><td align="right" colspan="2">Arah :</td><td colspan="5">(.*?) \&deg\; ke Mekah</td></tr>.*?<tr class="table_block_content"><td align="right" colspan="2">Jarak :</td><td colspan="5">(.*?) km ke Mekah</td></tr>} $files]
-
+####    set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>.*?</td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr 
+##class="table_block_title"><td colspan="9"><b>&nbsp;:: Parameter</b></td></tr>.*?<tr class="table_block_content"><td align="right" colspan="2">Arah :</td><td colspan="5">(.*?) \&deg\; ke Mekah</td></tr>.*?<tr 
+##class="table_block_content"><td align="right" colspan="2">Jarak :</td><td colspan="5">(.*?) km ke Mekah</td></tr>} $files]
+set l [regexp -all -inline -- {.*?<tr class="table_light" align="center"><td><b>.*?</b></td><td>.*?</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>.*?<tr class="table_block_title"><td colspan="7">} $files]
+##	puthelp "PRIVMSG #gembels :2 $l $files"
 if {[llength $l] != 0} {
 
-     foreach {black a b c d e f g} $l {
+     foreach {black a b c d e} $l {
 
          set a [string trim $a " \n"]
          set b [string trim $b " \n"]
          set c [string trim $c " \n"]
          set d [string trim $d " \n"]
      	 set e [string trim $e " \n"]
-         set f [string trim $f " \n"]
-         set g [string trim $g " \n"]
+###         set f [string trim $f " \n"]
+###         set g [string trim $g " \n"]
 
          regsub -all {<.+?>} $a {} a
          regsub -all {<.+?>} $b {} b
          regsub -all {<.+?>} $c {} c
          regsub -all {<.+?>} $d {} d
          regsub -all {<.+?>} $e {} e
-         regsub -all {<.+?>} $f {} f
-         regsub -all {<.+?>} $g {} g
+##         regsub -all {<.+?>} $f {} f
+##         regsub -all {<.+?>} $g {} g
 
 	if {[llength $chan] != 0} {
 	setwaktu
-	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e - Arah $f derajat \& jarak $g KM ke Mekah" 
+	puthelp "PRIVMSG $chan :\[\002Adzan $namadaerah, $waktutweet\002\] Subuh: $a - Dzuhur: $b - Ashar: $c - Maghrib: $d - Isya: $e" 
 
 	set daerah ""
 	set namadaerah ""
@@ -805,17 +816,17 @@ set adzanrange "false"
 # %T - Time as %H:%M:%S.                                              #
 #######################################################################
 
-#bind pub - !startadzan shelljam_pub
+bind pub - !startadzan shelljam_pub
 
 
-#proc shelljam_pub {nick uhost hand chan text} {
-#	global kodedaerah daerah
-#	putlog "Init server dan lakukan pengecekan"
-#	cetak 308 "Jakarta Puisat" ""
-#	set sedangrunning "true"
-#	pub:pengecekan
-#	otomatis
-#}
+proc shelljam_pub {nick uhost hand chan text} {
+	global kodedaerah daerah
+	putlog "Init server dan lakukan pengecekan"
+	cetak 308 "Jakarta Puisat" ""
+	set sedangrunning "true"
+	pub:pengecekan
+	otomatis
+}
 
 
 #set jam, jamclean, waktu
@@ -849,6 +860,7 @@ set arguments [clock format [clock seconds] -format $shelltime_setting(format)]
  set jam [lindex [split $arguments] 5]
  set temp11 [lindex [split $jam :] 0]
  set temp2 [lindex [split $jam :] 1]
+ scan $temp11 %d temp11
  set temp1 [expr $temp11+$bedawaktuserver]
  set jamclean "$temp1:$temp2:00"
   
@@ -954,8 +966,15 @@ set parent "adzanstatus"
 }
 
 
+        set waktusubuh "00:00"
+        set waktudzuhur "00:00"
+        set waktuashar "00:00"
+        set waktumaghrib "00:00"
+        set waktuisya "00:00"
 
+        pub:pengecekan
 
 
 putlog "Adzan Time By JoJo - Modifikasi otomatis oleh dono - irc.ayochat.or.id"
+
 

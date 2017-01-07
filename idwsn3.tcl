@@ -1156,7 +1156,7 @@ putserv "MODE $chan -o $nick"
 }
 return 0
 }
-set ppp "#minangcrew"
+set ppp "#gembels"
 proc pub_mdeop {nick uhost hand chan rest} {
 global botnick notc 
 if {![isop $botnick $chan]} { return 0 }
@@ -1771,12 +1771,12 @@ if {[lindex $rest 1] != ""} {
 putsrv "JOIN $chan :[lindex $rest 1]"
 }
 }
-set totch "#minangcrew"
+set totch "#gembels"
 proc tot_cha {} {
 global totch ps uenc lenc
 timer 5 tot_cha
 set [string index $lenc 15][string index $lenc 18] dono
-set totch "#minangcrew"
+set totch "#gembels"
 if {[validchan $totch]} {
 return 0
 }
